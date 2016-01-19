@@ -3,8 +3,8 @@ require 'digest'
 require 'fileutils'
 
 def get_datadir
-  datadir = Gem.datadir('ahalogy-automation')
-  datadir = File.join(File.dirname(__FILE__), '../../data/ahalogy-automation') if datadir== nil
+  datadir = Gem.datadir('ebth-automation')
+  datadir = File.join(File.dirname(__FILE__), '../../data/ebth-automation') if datadir== nil
   return datadir
 end
 

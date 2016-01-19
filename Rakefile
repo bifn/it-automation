@@ -2,7 +2,7 @@ task :default => [:build]
 task :test => [:build, :install]
 
 task :build do
-  `gem build ./ahalogy-automation.gemspec`
+  `gem build ./ebth-automation.gemspec`
 end
 
 task :install do
@@ -16,9 +16,9 @@ task :push do
 end
 
 task :console do
-  exec "irb -r ahalogy-automation -I ./lib"
+  exec "irb -r ebth-automation -I ./lib"
 end
 
 task :run do
-  ruby "-Ilib", 'bin/a5y-configure'
+  ruby "-Ilib", 'bin/ebth-configure'
 end

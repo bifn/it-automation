@@ -9,21 +9,21 @@ Xcode CLI is required to run this script. This can be accomplished by:
 
 This script is available as a gem and can be installed by:
 
-`sudo gem install ahalogy-automation`
+`sudo gem install ebth-automation`
 
 or updated
 
-`sudo gem update ahalogy-automation`
+`sudo gem update ebth-automation`
 
 The script requires sudo and can be run by:
 
-`sudo a5y-configure`
+`sudo ebth-configure`
 
 This runs the default settings for a general user. No group specific apps are installed and it is not enrolled in the systems manager.
 
 The script can be run for various groups by running:
 
-`sudo a5y-configure --group`
+`sudo ebth-configure --group`
 
 Groups include `developer, pinner, cs, designer, systems-manager, and all`.
 

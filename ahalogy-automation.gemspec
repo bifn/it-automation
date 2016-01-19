@@ -1,15 +1,15 @@
 Gem::Specification.new do |gem|
-  gem.name        = 'ahalogy-automation'
-  gem.version     = '0.0.11'
+  gem.name        = 'ebth-automation'
+  gem.version     = '0.0.1'
   gem.licenses    = ['MIT']
-  gem.date        = '2015-10-08'
+  gem.date        = '2016-01-19'
   gem.summary     = 'Scripts to handle IT automation.'
-  gem.description = 'Scripts that install applications on Ahalogy Mac computers.'
+  gem.description = 'Scripts that install applications on EBTH Mac computers.'
   gem.authors     = ['Zan Loy', 'Brian Cerchio']
   gem.email       = ['zan.loy@gmail.com', 'brian.cerchio@gmail.com']
-  gem.homepage    = 'https://www.ahalogy.com'
+  gem.homepage    = 'https://www.ebth.com'
   gem.files       = `git ls-files`.split("\n") - %w[.gitignore]
-  gem.executables = ['a5y-configure']
+  gem.executables = ['ebth-configure']
 
   gem.add_runtime_dependency 'colorize', '~> 0'
   gem.add_runtime_dependency 'command', '~> 1.0.0', '>= 1.0.0'

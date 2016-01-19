@@ -1,6 +1,6 @@
 Gem::Specification.new do |gem|
   gem.name        = 'ebth-automation'
-  gem.version     = '0.0.1'
+  gem.version     = '0.1.0'
   gem.licenses    = ['MIT']
   gem.date        = '2016-01-19'
   gem.summary     = 'Scripts to handle IT automation.'
@@ -8,7 +8,26 @@ Gem::Specification.new do |gem|
   gem.authors     = ['Zan Loy', 'Brian Cerchio']
   gem.email       = ['zan.loy@gmail.com', 'brian.cerchio@gmail.com']
   gem.homepage    = 'https://www.ebth.com'
-  gem.files       = `git ls-files`.split("\n") - %w[.gitignore]
+  gem.files       = # example.gemspec
+
+directory = File.dirname File.expand_path __FILE__
+dotfiles = %w(.gitignore)
+ignore_file = '.gitignore'
+file_list = []
+
+Dir.chdir directory do
+  ignored = File.readlines(ignore_file).map(&:chomp).reject { |glob| glob =~ /\A(#|\s*\z)/ }
+  file_list.replace Dir['**/**'] + dotfiles
+  file_list.delete_if do |file|
+    File.directory?(file) or ignored.any? { |glob| File.fnmatch? glob, file }
+  end
+end
+
+# Later...
+
+gem.files = file_list
+
+#`git ls-files`.split("\n") - %w[.gitignore]
   gem.executables = ['ebth-configure']
 
   gem.add_runtime_dependency 'colorize', '~> 0'

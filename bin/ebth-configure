@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'ahalogy/install-helper'
+require 'ebth/install-helper'
 require 'colorize'
 require 'command'
 require 'daybreak'
@@ -39,7 +39,7 @@ OptionParser.new do |opts|
 end.parse!
 
 # Open settings database
-db = Daybreak::DB.new File.expand_path('~/.ahalogy.db'), default: ''
+db = Daybreak::DB.new File.expand_path('~/.ebth.db'), default: ''
 # Verify values are already in the database or ask for them
 unless options[:skip_github]
   if options[:ask] or db[:github_username].empty?
@@ -150,12 +150,12 @@ begin
           upload_key = false if entry[:key] == local_key
         end
         if upload_key
-          github.users.keys.create title: 'uploaded via ahalogy-automation', key: local_key
+          github.users.keys.create title: 'uploaded via ebth-automation', key: local_key
         else
           puts 'SSH Key already installed on GitHub...skipped.'.colorize(:green)
         end
       end
-      run_cmd 'sudo srm -f -m ~/.ahalogy.db', 'Sanitizing database...'
+      run_cmd 'sudo srm -f -m ~/.ebth.db', 'Sanitizing database...'
     end
 
     # Install homebrew
@@ -228,7 +228,7 @@ begin
 
   if options[:groups].include? :pinner
     install_cask ['adobe-creative-cloud', 'microsoft-office', :joinme]
-    notes << "If this is the first time running a5y-configure, you will need to manually install Adobe Creative Cloud by running:\n     open '/opt/homebrew-cask/Caskroom/adobe-creative-cloud/latest/Creative Cloud Installer.app'"
+    notes << "If this is the first time running ebth-configure, you will need to manually install Adobe Creative Cloud by running:\n     open '/opt/homebrew-cask/Caskroom/adobe-creative-cloud/latest/Creative Cloud Installer.app'"
   end
 
   if options[:groups].include? :cs
@@ -238,7 +238,7 @@ begin
   if options[:groups].include? :designer
     run_cmd 'sudo pmset -a sleep 0', 'Disabling Sleep'
     install_cask ['adobe-creative-cloud', 'sketch-tool', :invisionsync, :tower, :anvil]
-    notes << "If this is the first time running a5y-configure, you will need to manually install Adobe Creative Cloud by running:\n     open '/opt/homebrew-cask/Caskroom/adobe-creative-cloud/latest/Creative Cloud Installer.app'"
+    notes << "If this is the first time running ebth-configure, you will need to manually install Adobe Creative Cloud by running:\n     open '/opt/homebrew-cask/Caskroom/adobe-creative-cloud/latest/Creative Cloud Installer.app'"
   end
   
   # Sets power settings to default profiles

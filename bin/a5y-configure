@@ -14,7 +14,7 @@ user_uid = ENV['SUDO_UID']
 user_gid = ENV['SUDO_GID']
 fail 'Environment variables for SUDO_UID and SUDO_GID are invalid' if user_uid.nil? or user_gid.nil?
 
-groups = [:developer, :pinner, :cs, :designer, :'systems-manager']
+groups = [:developer, :pinner, :cs, :designer]
 options = {
   groups: [:default],
   verbose: false,
@@ -84,24 +84,16 @@ begin
     system 'xcodebuild &> /dev/null'
     case $?.exitstatus
     when 1
-      if options[:xcode]
-        xcode_dmg = options[:xcode]
-      else
-        puts 'Downloading Xcode to install...'.colorize(:blue)
-        system('curl --output /tmp/xcode.dmg https://s3-us-west-1.amazonaws.com/a5y-is-and-t/Xcode_7.0.1.dmg')
-        xcode_dmg = '/tmp/xcode.dmg'
-      end
-      command = Command.run("hdiutil attach -nobrowse '#{xcode_dmg}'")
-      fail "Can't mount Xcode dmg at #{xcode_dmg}." unless command.status == 0
-      line = command.stdout.lines.last
-      device = line.split(' ').first.strip
-      dir = line.split(' ').last.strip
-      puts 'Copying Xcode.app to /Applications...'.colorize(:blue)
-      command = Command.run("cp -R '#{dir}/Xcode.app' /Applications")
-      fail 'Error trying to install Xcode.app in /Applications' unless command.status == 0
-      Command.run "hdiutil unmount #{device}"
-      FileUtils.rm xcode_dmg if xcode_dmg == '/tmp/xcode.dmg'
-      install_file 'com.apple.dt.Xcode.plist', '/Library/Preferences/com.apple.dt.Xcode.plist'
+       puts "Be aware that when Xcode is installed using the Mac App Store, it can become a problem"
+       puts "for the an end user when they're unable to install updates without signing in with the"
+       puts "same Apple ID that installed it."
+       puts ""
+       puts "So download the current version of Xcode by signing in to developer.apple.com"
+       puts "and downloading it:"
+       puts "http://stackoverflow.com/questions/10335747/how-to-download-xcode-4-5-6-7-and-get-the-dmg-file"
+       puts ""
+       puts "Then copy Xcode.app to /Applications"
+       fail 'Please install Xcode.app in /Applications'
     when 69
       install_file 'com.apple.dt.Xcode.plist', '/Library/Preferences/com.apple.dt.Xcode.plist'
     end
@@ -133,13 +125,6 @@ begin
       else
         run_cmd 'git clone https://github.com/sstephenson/rbenv-gem-rehash.git /usr/local/var/rbenv/plugins/rbenv-gem-rehash', 'Installing rbenv-gem-rehash...'
       end
-    end
-
-    if options[:groups].include? :'systems-manager'
-      puts 'Installing Ahalogy-Systems-Manager.pkg...'.colorize(:blue)
-      system('curl --output /tmp/ahalogy-systems-manager.pkg https://s3-us-west-1.amazonaws.com/a5y-is-and-t/Ahalogy-Systems-Manager.pkg')
-      system('installer -pkg /tmp/ahalogy-systems-manager.pkg -target /')
-      FileUtils.rm '/tmp/ahalogy-systems-manager.pkg'
     end
 
     # Dropping privileges to the sudo_user

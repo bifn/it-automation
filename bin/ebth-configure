@@ -14,7 +14,7 @@ user_uid = ENV['SUDO_UID']
 user_gid = ENV['SUDO_GID']
 fail 'Environment variables for SUDO_UID and SUDO_GID are invalid' if user_uid.nil? or user_gid.nil?
 
-groups = [:developer, :pinner, :cs, :designer]
+groups = [:developer, :designer]
 options = {
   groups: [:default],
   verbose: false,
